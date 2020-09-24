@@ -46,9 +46,12 @@ public class PlaneMovement : MonoBehaviour
 
         lastPosition = transform.position;
 
-        float difference = Vector3.Distance(transform.position, pos);        
+        float difference = Vector3.Distance(transform.position, pos);
 
-        newRotation = Quaternion.Euler(0f, 0f, (-localDirection.x * difference) * rotationAmount);
+        float rotZ = (-localDirection.x * difference) * rotationAmount;
+
+        newRotation = Quaternion.Euler(0f, 0f, Mathf.Clamp( rotZ, -50f, 50f ) );
+
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
 
         transform.position = Vector3.Lerp(transform.position, pos, speed * Time.deltaTime);
